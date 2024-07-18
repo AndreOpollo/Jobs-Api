@@ -14,6 +14,7 @@ const connectDB = require('./db/connect')
 //router
 const authRouter = require('./routes/auth')
 const jobsRouter = require('./routes/jobs')
+const { StatusCodes } = require('http-status-codes')
 app.use(express.json())
 app.use(cors())
 app.use(helmet())
@@ -24,6 +25,9 @@ app.use(rateLimiter({
 }))
 
 //routes
+app.get('/',(req,res)=>{
+    res.status(StatusCodes.OK).send('Jobs Api')
+})
 app.use('/api/v1/auth',authRouter)
 app.use('/api/v1/jobs',authenticatedUser,jobsRouter)
 //middleware
